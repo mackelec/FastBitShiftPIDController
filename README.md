@@ -13,7 +13,7 @@ Include the header in your source file and create an instance of the `FastBitShi
 
 ### Example:
 
-[CODEBLOCK_START]
+```
 #include "FastBitShiftPIDController.h"
 
 int main() {
@@ -23,7 +23,7 @@ int main() {
     int32_t output = pid.compute(setpoint, input);
     // Use the output as needed...
 }
-[CODEBLOCK_END]
+```
 
 ## License
 
