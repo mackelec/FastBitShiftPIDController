@@ -23,7 +23,7 @@ public:
     int32_t compute(int32_t setpoint, int32_t input) {
         int32_t error = (setpoint - input) << scaleShift;  // Scale the error
 
-        if (error == 0 || error > 0 && integral > 0 || error < 0 && integral < 0) {
+        if (error == 0 || error > 0 && integral < 0 || error < 0 && integral > 0) {
             integral = 0;  // Reset integral term if setpoint is achieved or exceeded
         } else {
             integral += error;
