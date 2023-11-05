@@ -62,6 +62,27 @@ class FastBitShiftPIDController
     {
     }
 
+     // Setter for Kp shift value
+    void setKpShift(BitShift newKpShift) {
+        Kp_shift = newKpShift;
+    }
+
+    // Setter for Ki shift value
+    void setKiShift(BitShift newKiShift) {
+        Ki_shift = newKiShift;
+    }
+
+    // Setter for Kd shift value
+    void setKdShift(BitShift newKdShift) {
+        Kd_shift = newKdShift;
+    }
+
+    // Optionally, if you need to set all PID terms at once
+    void setPIDShifts(BitShift newKpShift, BitShift newKiShift, BitShift newKdShift) {
+        setKpShift(newKpShift);
+        setKiShift(newKiShift);
+        setKdShift(newKdShift);
+    }
     void setIntegralDisabled(bool disable)
     {
         disableIntegral = disable;
