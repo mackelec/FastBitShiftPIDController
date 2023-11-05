@@ -61,10 +61,19 @@ The `BitShift` enum defines constants used to configure the bit shifting for PID
 
 ```
 enum class BitShift : uint8_t {
-    FAST_1,    // No scaling, multiply/divide by 1
-    FAST_2,    // Multiply/divide by 2
-    // ... and so on
-    FAST_4096  // Multiply/divide by 4096
+    FAST_1,            // No scaling, multiply/divide by 1
+    FAST_2,            // Multiply/divide by 2
+    FAST_4 = 2,        // Multiply/divide by 4
+    FAST_8 = 3,        // Multiply/divide by 8
+    FAST_16 = 4,       // Multiply/divide by 16
+    FAST_32 = 5,       // Multiply/divide by 32
+    FAST_64 = 6,       // Multiply/divide by 64
+    FAST_128 = 7,      // Multiply/divide by 128
+    FAST_256 = 8,      // Multiply/divide by 256
+    FAST_512 = 9,      // Multiply/divide by 512
+    FAST_1024 = 10,    // Multiply/divide by 1024
+    FAST_2048 = 11,    // Multiply/divide by 2048
+    FAST_4096          // Multiply/divide by 4096
 };
 ```
 
