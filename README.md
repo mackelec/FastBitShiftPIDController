@@ -17,9 +17,7 @@ The FastBitShiftPIDController library provides a high-performance, integer-based
 You would use the FastBitShiftPIDController library if you need a PID control solution that is:
 
 - **Fast**: Designed with performance in mind, ideal for time-critical applications.
-- **Resource-friendly**: Minimizes memory and CPU usage, perfect for constrained embedded systems.
-- **Versatile**: Adjustable to a wide range of control tasks with simple configuration.
-- **Deterministic**: Offers predictable execution time, essential for real-time systems.
+
 
 ## Methods
 
