@@ -1,6 +1,7 @@
 #ifndef FASTBITSHIFTPIDCONTROLLER_H
 #define FASTBITSHIFTPIDCONTROLLER_H
 
+
 enum class BitShift : uint8_t {
     FAST_1 = 0,    // No scaling, multiply/divide by 1
     FAST_2 = 1,    // Multiply/divide by 2
@@ -34,23 +35,18 @@ class FastBitShiftPIDController
     inline int32_t IntegralTerm(int32_t error)
     {
       if (disableIntegral) return 0;
-      if (error == 0 || (error > 0 && integral < 0) || (error < 0 && integral > 0))  return 0;
+      if (error == 0 || (error > 0 && integral < 0) || (error < 0 && integral > 0))  
+      {
+        integral = 0;
+        return 0;
+      }
      
       integral += error; // Accumulate integral term 
-     
 
-      // Apply bounds to prevent integral windup
-      const int32_t integralMax = outputMax << static_cast<uint8_t>(scaleShift);
-      if (integral > integralMax)
-      {
-        integral = integralMax;
-      }
-      else if (integral < -integralMax)
-      {
-        integral = -integralMax;
-      }
+      int32_t contrainedIntegral = integral;
 
-      return integral;
+      int32_t shiftedIntegral = contrainedIntegral << static_cast<uint8_t>(Ki_shift);
+      return shiftedIntegral;
     }
 
   public:
@@ -97,38 +93,15 @@ class FastBitShiftPIDController
     {
         int32_t error = setpoint - input;
 
-        // Integral term calculation
-        if (!disableIntegral)
-        {
-            if (error == 0 || error > 0 && integral < 0 || error < 0 && integral > 0) 
-	    {
-               integral = 0;  // Reset integral term if setpoint is achieved or exceeded
-	    }
-            else
-	    {
-               integral += error;  // Accumulate integral term if not disabled
-            }
-            // Apply bounds to prevent integral windup
-            int32_t integralMax = outputMax << static_cast<uint8_t>(scaleShift);
-            if (integral > integralMax)
-            {
-                integral = integralMax;
-            }
-            else if (integral < -integralMax)
-            {
-                integral = -integralMax;
-            }
-        }
-        else
-        {
-            integral = 0;  // Reset integral term if disabled
-        }
+
 
         // PID terms calculation with consideration for disabled states
         int32_t pTerm = error << static_cast<uint8_t>(Kp_shift); // Proportional term
         int32_t iTerm = IntegralTerm(error); // Integral term
         int32_t dTerm = disableDerivative ? 0 : (error - previousError) << static_cast<uint8_t>(Kd_shift); // Derivative term
-
+//        Serial << "the terms = " << pTerm << ", " 
+//                                 << iTerm << ", " 
+//                                 << dTerm << endl;
         // Combine the PID terms
         int32_t output = pTerm + iTerm + dTerm;
         output = output >> static_cast<uint8_t>(scaleShift);  // Apply scaling
